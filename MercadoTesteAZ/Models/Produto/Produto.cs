@@ -1,10 +1,10 @@
-﻿using MarketAzCorp.Models.Categorias;
+﻿using MercadoTesteAZ.Models.Categorias;
 
 namespace MercadoTesteAZ.Models.Produtos
 {
     public class Produto
     {
-        public Produto(string id, string nome, string descricao, string fabricante, decimal preco, string imagemURL, string categoriaId, Categoria categoria, IEnumerable<HistoricoPreco> historicoDePrecos)
+        public Produto(string id, string nome, string descricao, string fabricante, decimal preco, string imagemURL, string categoriaId)
         {
             Id = string.IsNullOrWhiteSpace(id) ? Guid.NewGuid().ToString("D") : id;
             Nome = nome;

@@ -1,6 +1,6 @@
 ﻿using MercadoTesteAZ.Models.Clientes;
 using MercadoTesteAZ.Models.Empresa;
-using MarketAzCorp.Models.SharedValues;
+using MercadoTesteAZ.Models.SharedValues;
 using MercadoTesteAZ.Enums;
 
 namespace MercadoTesteAZ.Models.Pedidos

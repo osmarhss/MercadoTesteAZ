@@ -1,5 +1,4 @@
-﻿using MarketAzCorp.Models.SharedValues;
-using MercadoTesteAZ.Models.MeiosDePagamento;
+﻿using MercadoTesteAZ.Models.MeiosDePagamento;
 using MercadoTesteAZ.Models.Pedidos;
 using MercadoTesteAZ.Models.SharedValues;
 using MercadoTesteAZ.Models.Usuários;
@@ -30,12 +29,5 @@ namespace MercadoTesteAZ.Models.Clientes
         public IEnumerable<IMetodosPagamento>? MeusMeiosDePagamento { get; private set; }
         public IEnumerable<Pedido>? MeusPedidos { get; private set; }
 
-        public void SalvarCartao(CartaoDeCredito c) 
-        {
-            if (MeusMeiosDePagamento is null)
-                MeusMeiosDePagamento = new List<IMetodosPagamento>();
-
-            MeusMeiosDePagamento = MeusMeiosDePagamento.Append(c);
-        }
     }
 }

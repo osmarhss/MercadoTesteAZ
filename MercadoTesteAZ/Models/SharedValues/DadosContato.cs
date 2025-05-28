@@ -2,13 +2,14 @@
 {
     public class DadosContato
     {
-        public DadosContato(string email, string telefone)
+        public DadosContato(string email, string usuarioId)
         {
             Email = email;
-            Telefone = telefone;
+            UsuarioId = usuarioId;
         }
 
-        public string Email { get; set; }
-        public string? Telefone { get; set; }
+        public string Email { get; private set; }
+        public string? Telefone { get; private set; }
+        public string UsuarioId { get; private set; }
     }
 }

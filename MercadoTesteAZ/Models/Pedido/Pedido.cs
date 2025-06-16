@@ -34,5 +34,6 @@ namespace MercadoTesteAZ.Models.Pedidos
         public Cliente? Cliente { get; private set; }
 
         public IEnumerable<PedidoProduto> ProdutosComprados { get; set; }
+        public object PedidoProdutos { get; internal set; }
     }
 }

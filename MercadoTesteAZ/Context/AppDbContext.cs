@@ -30,5 +30,22 @@ namespace MercadoTesteAZ.Context
         public DbSet<DadosContato> DadosContatos { get; set; }
         public DbSet<DadosGeograficos> DadosGeograficos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PedidoProduto>()
+                .HasKey(pp => new { pp.PedidoId, pp.ProdutoId });
+
+            modelBuilder.Entity<PedidoProduto>()
+                .HasOne(pp => pp.Pedido)
+                .WithMany(p => p.ProdutosComprados)
+                .HasForeignKey(pp => pp.PedidoId);
+
+            modelBuilder.Entity<PedidoProduto>()
+                .HasOne(pp => pp.Produto)
+                .WithMany()
+                .HasForeignKey(pp => pp.ProdutoId);
+        }
+
     }
 }

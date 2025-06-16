@@ -1,4 +1,6 @@
-﻿namespace MercadoTesteAZ.Models.SharedValues
+﻿using MercadoTesteAZ.Models.Clientes;
+
+namespace MercadoTesteAZ.Models.SharedValues
 {
     public class DadosGeograficos
     {
@@ -18,6 +20,7 @@
         public string Cidade { get; private set; }
         public string UF { get; private set; }
         public string ClienteId { get; private set; }
+        public Cliente? Cliente { get; private set; }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MercadoTesteAZ.Context;
 using MercadoTesteAZ.Models.Categorias;
+using Microsoft.EntityFrameworkCore;
 
 namespace MercadoTesteAZ.Repositorys.Categorias
 {
@@ -7,6 +8,11 @@ namespace MercadoTesteAZ.Repositorys.Categorias
     {
         public CategoriaRepository(AppDbContext context) : base(context)
         {
+        }
+
+        public async Task<Categoria?> ObterPorNome(string nome)
+        {
+            return await _context.Categorias.FirstOrDefaultAsync(c => c.Nome == nome);
         }
     }
 }

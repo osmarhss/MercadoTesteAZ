@@ -1,6 +1,8 @@
-﻿namespace MercadoTesteAZ.Repositorys.SharedValues
+﻿using MercadoTesteAZ.Models.SharedValues;
+
+namespace MercadoTesteAZ.Repositorys.SharedValues
 {
-    public interface IDadosContatoRepository
+    public interface IDadosContatoRepository : IRepository<DadosContato>
     {
     }
 }

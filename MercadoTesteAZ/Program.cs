@@ -1,3 +1,11 @@
+using MercadoTesteAZ.Context;
+using MercadoTesteAZ.Repositorys;
+using MercadoTesteAZ.Repositorys.Categorias;
+using MercadoTesteAZ.Repositorys.Clientes;
+using MercadoTesteAZ.Services;
+using MercadoTesteAZ.Services.Categorias;
+using Microsoft.EntityFrameworkCore;
+
 namespace MercadoTesteAZ
 {
     public class Program
@@ -8,6 +16,15 @@ namespace MercadoTesteAZ
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped(typeof(ICrudService<>), typeof(CrudService<>));
+            builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+            builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+            builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+            builder.Services.AddScoped<IUnityOfWork, UnityOfWork>();
+
+            string mySqlConecction = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(mySqlConecction, ServerVersion.AutoDetect(mySqlConecction)));
 
             var app = builder.Build();
 

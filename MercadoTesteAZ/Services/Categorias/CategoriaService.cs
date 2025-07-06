@@ -1,4 +1,5 @@
-﻿using MercadoTesteAZ.Models.Categorias;
+﻿using MercadoTesteAZ.Exceptions;
+using MercadoTesteAZ.Models.Categorias;
 using MercadoTesteAZ.Repositorys;
 using MercadoTesteAZ.Repositorys.Categorias;
 using MercadoTesteAZ.Repositorys.Produtos;
@@ -8,23 +9,23 @@ namespace MercadoTesteAZ.Services.Categorias
     public class CategoriaService : CrudService<Categoria>, ICategoriaService
     {
         private readonly ICategoriaRepository _categoriaRepository;
-        public CategoriaService(UnityOfWork uow, ICategoriaRepository repository) : base(uow, repository)
+        public CategoriaService(IUnityOfWork uow, ICategoriaRepository categoriaRepository) : base(uow, categoriaRepository)
         {
-            _categoriaRepository = repository;
+            _categoriaRepository = categoriaRepository;
         }
 
-        public override async Task AdicionarAsync(Categoria entity)
+        public override async Task AdicionarAsync(Categoria categoria)
         {
-            await VerificarCategoriaExistente(entity.Nome);
-            await base.AdicionarAsync(entity);
+            await VerificarCategoriaExistentePorNome(categoria.Nome);
+            await base.AdicionarAsync(categoria);
         }
 
-        public async Task VerificarCategoriaExistente(string nome)
+        public async Task VerificarCategoriaExistentePorNome(string nome)
         {
             var categoriaExistente = await _categoriaRepository.ObterPorNome(nome);
 
             if (categoriaExistente != null)
-                throw new Exception("Já existe uma categoria com esse nome");
+                throw new ExcecaoPersonalizada("Já existe uma categoria com esse nome");
         }
     }
 }

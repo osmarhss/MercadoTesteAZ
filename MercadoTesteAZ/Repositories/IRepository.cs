@@ -1,13 +1,13 @@
 ﻿using System.Linq.Expressions;
 
-namespace MercadoTesteAZ.Services
+namespace MercadoTesteAZ.Repositorys
 {
-    public interface ICrudService<T>
+    public interface IRepository<T>
     {
         public Task<IEnumerable<T>> ObterTodosAsync();
-        public Task<T> ObterPorIdAsync(string id);
+        public Task<T?> ObterPorIdAsync(Expression<Func<T, bool>> predicate);
         public Task AdicionarAsync(T entity);
         public Task AtualizarAsync(T entity);
-        public Task DeletarAsync(string id);
+        public Task DeletarAsync(T entity);
     }
 }

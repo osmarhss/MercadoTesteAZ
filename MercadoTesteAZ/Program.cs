@@ -1,9 +1,9 @@
-using MercadoTesteAZ.Context;
-using MercadoTesteAZ.Repositorys;
-using MercadoTesteAZ.Repositorys.Categorias;
-using MercadoTesteAZ.Repositorys.Clientes;
-using MercadoTesteAZ.Services;
-using MercadoTesteAZ.Services.Categorias;
+using MercadoTesteAZ.Application.Repositories;
+using MercadoTesteAZ.Application.Repositories.Categorias;
+using MercadoTesteAZ.Application.Repositories.Clientes;
+using MercadoTesteAZ.Application.Services;
+using MercadoTesteAZ.Application.Services.Categorias;
+using MercadoTesteAZ.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace MercadoTesteAZ

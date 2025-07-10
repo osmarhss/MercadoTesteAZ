@@ -1,4 +1,4 @@
-﻿namespace MercadoTesteAZ.Application.ViewModels
+﻿namespace MercadoTesteAZ.Presentation.ViewModels
 {
     public class CategoriaViewModel
     {

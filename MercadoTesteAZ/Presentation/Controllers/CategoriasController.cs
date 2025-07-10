@@ -1,11 +1,11 @@
 ﻿using MercadoTesteAZ.Application.Services.Categorias;
-using MercadoTesteAZ.Application.ViewModels;
-using MercadoTesteAZ.Application.ViewModels.Mappings;
 using MercadoTesteAZ.Domain.Exceptions;
 using MercadoTesteAZ.Domain.Entities.Categorias;
 using Microsoft.AspNetCore.Mvc;
+using MercadoTesteAZ.Presentation.ViewModels;
+using MercadoTesteAZ.Presentation.ViewModels.Mappings;
 
-namespace MercadoTesteAZ.Application.Controllers
+namespace MercadoTesteAZ.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

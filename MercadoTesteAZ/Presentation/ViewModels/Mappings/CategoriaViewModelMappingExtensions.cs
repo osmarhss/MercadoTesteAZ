@@ -1,8 +1,8 @@
 ﻿using Humanizer;
-using MercadoTesteAZ.Application.ViewModels;
 using MercadoTesteAZ.Domain.Entities.Categorias;
+using MercadoTesteAZ.Presentation.ViewModels;
 
-namespace MercadoTesteAZ.Application.ViewModels.Mappings
+namespace MercadoTesteAZ.Presentation.ViewModels.Mappings
 {
     public static class CategoriaViewModelMappingExtensions
     {

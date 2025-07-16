@@ -8,5 +8,6 @@ namespace MercadoTesteAZ.Application.Repositories.Produtos
         public Task<IEnumerable<Produto>> ObterProdutosPorCategoriaAsync(string categoriaId);
         public Task<IEnumerable<Produto>> ObterProdutosPorPreco(decimal[] faixaPreco);
         public Task<IEnumerable<Produto>> ObterProdutosPorFabricante(string fabricante);
+        public Task<Produto?> ObterProdutoPorNomeEhVendedorId(string nome, string vendedorId);
     }
 }

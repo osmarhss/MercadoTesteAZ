@@ -15,13 +15,23 @@ namespace MercadoTesteAZ.Application.Services.Categorias
 
         public override async Task AdicionarAsync(Categoria categoria)
         {
-            await VerificarCategoriaExistentePorNome(categoria.Nome);
+            await VerificarCategoriaExistentePorNomeAsync(categoria.Nome);
             await base.AdicionarAsync(categoria);
         }
 
-        public async Task VerificarCategoriaExistentePorNome(string nome)
+        public async Task<Categoria> ObterPorNomeAsync(string nome) 
         {
-            var categoriaExistente = await _categoriaRepository.ObterPorNome(nome);
+            var categoria = await _categoriaRepository.ObterPorNomeAsync(nome);
+
+            if (categoria != null)
+                return categoria;
+
+            throw new ExcecaoPersonalizada("Não há categoria com esse nome");
+        }
+
+        public async Task VerificarCategoriaExistentePorNomeAsync(string nome)
+        {
+            var categoriaExistente = await _categoriaRepository.ObterPorNomeAsync(nome);
 
             if (categoriaExistente != null)
                 throw new ExcecaoPersonalizada("Já existe uma categoria com esse nome");

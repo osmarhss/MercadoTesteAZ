@@ -25,5 +25,10 @@ namespace MercadoTesteAZ.Application.Repositories.Produtos
         {
             return await _context.Produtos.Where(p => p.Fabricante == fabricante).AsNoTracking().ToListAsync();
         }
+
+        public async Task<Produto?> ObterProdutoPorNomeEhVendedorId(string nome, string vendedorId) 
+        {
+            return await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.Nome == nome && p.VendedorId == vendedorId);
+        }
     }
 }

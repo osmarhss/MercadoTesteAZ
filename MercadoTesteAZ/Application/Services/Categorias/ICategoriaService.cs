@@ -6,6 +6,7 @@ namespace MercadoTesteAZ.Application.Services.Categorias
 {
     public interface ICategoriaService : ICrudService<Categoria>
     {
-        public Task VerificarCategoriaExistentePorNome(string nome);
+        public Task VerificarCategoriaExistentePorNomeAsync(string nome);
+        public Task<Categoria> ObterPorNomeAsync(string nome);
     }
 }

@@ -7,8 +7,8 @@ using MercadoTesteAZ.Presentation.ViewModels.Mappings;
 
 namespace MercadoTesteAZ.Presentation.Controllers
 {
-        [Route("api/[controller]")]
-        [ApiController]
+    [Route("api/[controller]")]
+    [ApiController]
     public class CategoriasController : Controller
     {
         private readonly ICategoriaService _categoriaServ;
@@ -19,7 +19,7 @@ namespace MercadoTesteAZ.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoriaViewModel>>> ObterTodos()
+        public async Task<ActionResult<IEnumerable<CategoriaViewModel>>> ObterCategorias()
         {
             try
             {
@@ -51,7 +51,7 @@ namespace MercadoTesteAZ.Presentation.Controllers
                 return BadRequest(ex.Mensagem);
             }
         }
-
+        
         [HttpGet("obterPorNome/{nome}")]
         public async Task<ActionResult<CategoriaViewModel>> ObterPorNome(string nome) 
         {

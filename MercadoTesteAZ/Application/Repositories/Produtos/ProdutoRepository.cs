@@ -11,16 +11,24 @@ namespace MercadoTesteAZ.Application.Repositories.Produtos
         {
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutosPorCategoriaAsync(string categoriaId) 
+        public async Task<IEnumerable<Produto>> ObterProdutosPorCategoriaAsync(string categoriaId)
         {
-            var result = await _context.Produtos.Where(p => p.CategoriaId == categoriaId).ToListAsync();
-            return result;
+            return await _context.Produtos.Where(p => p.CategoriaId == categoriaId).Include(p => p.Categoria).AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutoPorPreco(decimal[] faixaPreco) 
+        public async Task<IEnumerable<Produto>> ObterProdutosPorPreco(decimal[] faixaPreco)
         {
-            var result = await _context.Produtos.Where(p => p.Preco >= faixaPreco[0] && p.Preco <= faixaPreco[1]).ToListAsync();
-            return result;
+            return await _context.Produtos.Where(p => p.Preco >= faixaPreco[0] && p.Preco <= faixaPreco[1]).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<Produto>> ObterProdutosPorFabricante(string fabricante)
+        {
+            return await _context.Produtos.Where(p => p.Fabricante == fabricante).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<Produto?> ObterProdutoPorNomeEhVendedorId(string nome, string vendedorId) 
+        {
+            return await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.Nome == nome && p.VendedorId == vendedorId);
         }
     }
 }

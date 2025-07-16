@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MercadoTesteAZ.Domain.Entities;
 using MercadoTesteAZ.Domain;
 
-namespace MercadoTesteAZ.Application.Controllers;
+namespace MercadoTesteAZ.Presentation.Controllers;
 
 public class HomeController : Controller
 {

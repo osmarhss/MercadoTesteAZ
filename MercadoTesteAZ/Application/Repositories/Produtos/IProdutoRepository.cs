@@ -6,5 +6,8 @@ namespace MercadoTesteAZ.Application.Repositories.Produtos
     public interface IProdutoRepository : IRepository<Produto>
     {
         public Task<IEnumerable<Produto>> ObterProdutosPorCategoriaAsync(string categoriaId);
+        public Task<IEnumerable<Produto>> ObterProdutosPorPreco(decimal[] faixaPreco);
+        public Task<IEnumerable<Produto>> ObterProdutosPorFabricante(string fabricante);
+        public Task<Produto?> ObterProdutoPorNomeEhVendedorId(string nome, string vendedorId);
     }
 }

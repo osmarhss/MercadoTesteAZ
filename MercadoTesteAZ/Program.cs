@@ -1,9 +1,12 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MercadoTesteAZ.Application.Repositories;
 using MercadoTesteAZ.Application.Repositories.Categorias;
 using MercadoTesteAZ.Application.Repositories.Clientes;
 using MercadoTesteAZ.Application.Services;
 using MercadoTesteAZ.Application.Services.Categorias;
 using MercadoTesteAZ.Infra.Context;
+using MercadoTesteAZ.Presentation.Validators;
 using Microsoft.EntityFrameworkCore;
 
 namespace MercadoTesteAZ
@@ -15,6 +18,7 @@ namespace MercadoTesteAZ
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddValidatorsFromAssemblyContaining<CategoriaValidator>().AddFluentValidationAutoValidation();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped(typeof(ICrudService<>), typeof(CrudService<>));

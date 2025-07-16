@@ -32,7 +32,7 @@ namespace MercadoTesteAZ.Application.Services
 
         public async virtual Task AdicionarAsync(T entity)
         {
-            await VerificarEntidadeNaoExistentePorId(entity.Id);
+            await VerificarEntidadeExistentePorId(entity.Id);
 
             await _repository.AdicionarAsync(entity);
             await _uow.CommitAsync();

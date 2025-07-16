@@ -24,7 +24,8 @@ namespace MercadoTesteAZ.Presentation.Controllers
             try
             {
                 var categorias = await _categoriaServ.ObterTodosAsync();
-                return Ok(categorias);
+                var categoriasVM = categorias.ToCategoriaViewModelList();
+                return Ok(categoriasVM);
             }
             catch (ExcecaoPersonalizada ex)
             {
@@ -32,7 +33,7 @@ namespace MercadoTesteAZ.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "ObterPorId")]
+        [HttpGet("{id}", Name = "obterCategoriaPorId")]
         public async Task<ActionResult<CategoriaViewModel>> ObterPorId(string id) 
         {
             if (id is null)
@@ -41,6 +42,25 @@ namespace MercadoTesteAZ.Presentation.Controllers
             try
             {
                 var categoria = await _categoriaServ.ObterPorIdAsync(id);
+                var categoriaVM = categoria.ToCategoriaViewModel();
+
+                return Ok(categoriaVM);
+            }
+            catch (ExcecaoPersonalizada ex)
+            {
+                return BadRequest(ex.Mensagem);
+            }
+        }
+        
+        [HttpGet("obterPorNome/{nome}")]
+        public async Task<ActionResult<CategoriaViewModel>> ObterPorNome(string nome) 
+        {
+            if (string.IsNullOrWhiteSpace(nome))
+                return BadRequest("O nome da categoria não pode ser completamente nula ou vazia");
+
+            try
+            {
+                var categoria = await _categoriaServ.ObterPorNomeAsync(nome);
                 var categoriaVM = categoria.ToCategoriaViewModel();
 
                 return Ok(categoriaVM);
@@ -67,7 +87,7 @@ namespace MercadoTesteAZ.Presentation.Controllers
 
                 var categoriaCriadaVM = categoria.ToCategoriaViewModel();
 
-                return new CreatedAtRouteResult("ObterPorId", new { id = categoria.Id }, categoriaCriadaVM);
+                return new CreatedAtRouteResult("obterCategoriaPorId", new { id = categoria.Id }, categoriaCriadaVM);
             }
             catch (ExcecaoPersonalizada ex)
             {

@@ -1,5 +1,4 @@
-﻿using Humanizer;
-using MercadoTesteAZ.Domain.Entities.Categorias;
+﻿using MercadoTesteAZ.Domain.Entities.Categorias;
 using MercadoTesteAZ.Presentation.ViewModels;
 
 namespace MercadoTesteAZ.Presentation.ViewModels.Mappings
@@ -12,32 +11,23 @@ namespace MercadoTesteAZ.Presentation.ViewModels.Mappings
             {
                 CategoriaId = categoria.Id,
                 Nome = categoria.Nome,
-                ImagemUrl = categoria.ImagemUrl
+                ImagemUrl = categoria.ImagemUrl,
+                Produtos = categoria.Produtos?.ToProdutoViewModelList()
             };
             return categoriaVM;
         }
 
         public static Categoria ToCategoria(this CategoriaViewModel categoriaVM)
         {
-            var categoria = Categoria.Criar(categoriaVM.CategoriaId, categoriaVM.Nome, categoriaVM.ImagemUrl);
-            return categoria;
+            if(categoriaVM.Produtos is null)
+                return Categoria.Criar(categoriaVM.CategoriaId, categoriaVM.Nome, categoriaVM.ImagemUrl);
+            
+            return Categoria.Criar(categoriaVM.CategoriaId, categoriaVM.Nome, categoriaVM.ImagemUrl, categoriaVM.Produtos.ToProdutoList());
         }
 
-        public static IEnumerable<CategoriaViewModel> ToCategoriaViewModelList(List<Categoria> categorias) 
+        public static IEnumerable<CategoriaViewModel> ToCategoriaViewModelList(this IEnumerable<Categoria> categorias) 
         {
-            var categoriasViewModel = new List<CategoriaViewModel>();
-            foreach (var categoria in categorias)
-            {
-                var categoriaVM = new CategoriaViewModel() 
-                {
-                    CategoriaId = categoria.Id,
-                    Nome = categoria.Nome,
-                    ImagemUrl = categoria.ImagemUrl
-                };
-                categoriasViewModel.Add(categoriaVM);
-            }
-
-            return categoriasViewModel;
+            return categorias.Select(x => ToCategoriaViewModel(x) ?? new());
         }
     }
 }

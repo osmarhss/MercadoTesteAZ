@@ -5,6 +5,6 @@ namespace MercadoTesteAZ.Application.Repositories.Categorias
 {
     public interface ICategoriaRepository : IRepository<Categoria>
     {
-        public Task<Categoria?> ObterPorNome(string nome);
+        public Task<Categoria?> ObterPorNomeAsync(string nome);
     }
 }

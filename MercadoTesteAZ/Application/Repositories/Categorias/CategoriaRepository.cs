@@ -12,14 +12,9 @@ namespace MercadoTesteAZ.Application.Repositories.Categorias
         {
         }
 
-        public async Task<Categoria?> ObterPorNome(string nome)
+        public async Task<Categoria?> ObterPorNomeAsync(string nome)
         {
-            return await _context.Categorias.FirstOrDefaultAsync(c => c.Nome == nome);
-
-            //if (categoria != null)
-            //    return categoria;
-
-            //throw new ExcecaoPersonalizada("Cliente não encontrado");
+            return await _context.Categorias.AsNoTracking().FirstOrDefaultAsync(c => c.Nome == nome);
         }
     }
 }

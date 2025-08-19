@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using MercadoTesteAZ.Presentation.ViewModels;
+using MercadoTesteAZ.Application.ViewModels.Categorias;
 
 namespace MercadoTesteAZ.Presentation.Validators
 {
-    public class CategoriaValidator : AbstractValidator<CategoriaViewModel>
+    public class CategoriaValidator : AbstractValidator<CategoriaAdminViewModel>
     {
         public CategoriaValidator() 
         {

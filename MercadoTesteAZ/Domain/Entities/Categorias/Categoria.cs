@@ -1,34 +1,29 @@
-﻿using MercadoTesteAZ.Domain.Entities.Interfaces;
+﻿using MercadoTesteAZ.Application.ViewModels;
+using MercadoTesteAZ.Domain.Entities.Interfaces;
 using MercadoTesteAZ.Domain.Entities.Produtos;
 
 namespace MercadoTesteAZ.Domain.Entities.Categorias
 {
     public class Categoria : IEntity
     {
+        private readonly List<Produto> produtosList = new List<Produto>();
+        protected Categoria() { }
+        private Categoria(string id, string nome, string imagemUrl) 
+        {
+            Id = id;
+            Nome = nome;
+            ImagemUrl = imagemUrl;
+        }
         public string Id { get; private set; }
         public string Nome { get; private set; }
         public string ImagemUrl { get; private set; }
-        public List<Produto>? Produtos { get; private set; } = new List<Produto>();
+        public IReadOnlyCollection<Produto> Produtos => produtosList;
 
-        public static Categoria Criar(string? id, string nome, string imagemUrl) 
+        public static Categoria Adicionar(string nome, string imagemUrl) => new Categoria(Guid.NewGuid().ToString("D"), nome, imagemUrl);
+        public void Atualizar(string nome, string imagemUrl) 
         {
-            return new Categoria()
-            {
-                Id = string.IsNullOrWhiteSpace(id) ? Guid.NewGuid().ToString("D") : id,
-                Nome = nome,
-                ImagemUrl = imagemUrl
-            };
-        }
-
-        public static Categoria Criar(string? id, string nome, string imagemUrl, IEnumerable<Produto> produtos) 
-        {
-            return new Categoria()
-            {
-                Id = string.IsNullOrWhiteSpace(id) ? Guid.NewGuid().ToString("D") : id,
-                Nome = nome,
-                ImagemUrl = imagemUrl,
-                Produtos = produtos.ToList()
-            };
+            Nome = nome;
+            ImagemUrl = imagemUrl;
         }
     }
 }

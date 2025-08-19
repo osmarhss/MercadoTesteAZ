@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MercadoTesteAZ.Migrations
+namespace MercadoTesteAZ.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace MercadoTesteAZ.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Categorias.Categoria", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Categorias.Categoria", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -40,7 +40,7 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("Categorias");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Clientes.Cliente", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Clientes.Cliente", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -73,7 +73,7 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Clientes.MeusDadosPagamento", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Clientes.MeusDadosPagamento", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -89,7 +89,7 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("MeusDadosPagamentos");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Empresa.Vendedor", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Empresas.Vendedor", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -98,16 +98,32 @@ namespace MercadoTesteAZ.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UsuarioId")
+                    b.Property<string>("NomeFantasia")
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<double?>("NotaAvaliacao")
+                        .HasColumnType("double");
+
+                    b.Property<int>("QtdDeVendas")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RazaoSocial")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Vendedores");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.MeiosDePagamento.CartaoDeCredito", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.MeiosDePagamento.CartaoDeCredito", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -144,7 +160,7 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("CartoesDeCredito");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.MeiosDePagamento.ContaBancaria", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.MeiosDePagamento.ContaBancaria", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -152,6 +168,9 @@ namespace MercadoTesteAZ.Migrations
                     b.Property<string>("Agencia")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("ContaPrincipal")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("InstituicaoBancaria")
                         .IsRequired()
@@ -170,13 +189,12 @@ namespace MercadoTesteAZ.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VendedorId")
-                        .IsUnique();
+                    b.HasIndex("VendedorId");
 
                     b.ToTable("ContasBancarias");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.MeiosDePagamento.PayPal", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.MeiosDePagamento.PayPal", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -200,7 +218,7 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("ContasPayPal");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Pedidos.Pedido", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Pedidos.Pedido", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -240,7 +258,7 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("Pedidos");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Pedidos.PedidoProduto", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Pedidos.PedidoProduto", b =>
                 {
                     b.Property<string>("PedidoId")
                         .HasColumnType("varchar(255)");
@@ -261,7 +279,7 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("PedidosProdutos");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Produtos.HistoricoPreco", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Produtos.HistoricoPreco", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -283,18 +301,27 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("HistoricosDePreco");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Produtos.Produto", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Produtos.Produto", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("CategoriaId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
+                    b.Property<DateTime?>("DataCadastro")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Estoque")
+                        .HasColumnType("int");
 
                     b.Property<string>("Fabricante")
                         .IsRequired()
@@ -311,7 +338,14 @@ namespace MercadoTesteAZ.Migrations
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<int>("QtdVendida")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UltimaAtualizacao")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("VendedorId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
@@ -323,7 +357,7 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("Produtos");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.SharedValues.DadosContato", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.SharedValues.DadosContato", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -344,7 +378,7 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("DadosContatos");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.SharedValues.DadosGeograficos", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.SharedValues.DadosGeograficos", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -376,10 +410,13 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("DadosGeograficos");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Usuários.Usuario", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Usuário.Usuario", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -393,13 +430,13 @@ namespace MercadoTesteAZ.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Clientes.Cliente", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Clientes.Cliente", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.SharedValues.DadosContato", "DadosContato")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.SharedValues.DadosContato", "DadosContato")
                         .WithMany()
                         .HasForeignKey("DadosContatoId");
 
-                    b.HasOne("MercadoTesteAZ.Models.Usuários.Usuario", "Usuario")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Usuário.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -410,9 +447,9 @@ namespace MercadoTesteAZ.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Clientes.MeusDadosPagamento", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Clientes.MeusDadosPagamento", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.Clientes.Cliente", "Cliente")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Clientes.Cliente", "Cliente")
                         .WithMany("MeusMeiosDePagamento")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -421,35 +458,46 @@ namespace MercadoTesteAZ.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.MeiosDePagamento.CartaoDeCredito", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Empresas.Vendedor", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.Clientes.Cliente", "Cliente")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Usuário.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.MeiosDePagamento.CartaoDeCredito", b =>
+                {
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Clientes.Cliente", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MercadoTesteAZ.Models.Clientes.MeusDadosPagamento", null)
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Clientes.MeusDadosPagamento", null)
                         .WithMany("MeusCartoes")
                         .HasForeignKey("MeusDadosPagamentoId");
 
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.MeiosDePagamento.ContaBancaria", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.MeiosDePagamento.ContaBancaria", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.Empresa.Vendedor", "Vendedor")
-                        .WithOne("ContaBancaria")
-                        .HasForeignKey("MercadoTesteAZ.Models.MeiosDePagamento.ContaBancaria", "VendedorId")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Empresas.Vendedor", "Vendedor")
+                        .WithMany("ContasBancarias")
+                        .HasForeignKey("VendedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Vendedor");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.MeiosDePagamento.PayPal", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.MeiosDePagamento.PayPal", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.Clientes.Cliente", "Cliente")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Clientes.Cliente", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -458,21 +506,21 @@ namespace MercadoTesteAZ.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Pedidos.Pedido", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Pedidos.Pedido", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.Clientes.Cliente", "Cliente")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Clientes.Cliente", "Cliente")
                         .WithMany("MeusPedidos")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MercadoTesteAZ.Models.SharedValues.DadosGeograficos", "EnderecoEntrega")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.SharedValues.DadosGeograficos", "EnderecoEntrega")
                         .WithMany()
                         .HasForeignKey("EnderecoEntregaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MercadoTesteAZ.Models.Empresa.Vendedor", "Vendedor")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Empresas.Vendedor", "Vendedor")
                         .WithMany()
                         .HasForeignKey("VendedorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -485,15 +533,15 @@ namespace MercadoTesteAZ.Migrations
                     b.Navigation("Vendedor");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Pedidos.PedidoProduto", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Pedidos.PedidoProduto", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.Pedidos.Pedido", "Pedido")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Pedidos.Pedido", "Pedido")
                         .WithMany("ProdutosComprados")
                         .HasForeignKey("PedidoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MercadoTesteAZ.Models.Produtos.Produto", "Produto")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Produtos.Produto", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -504,9 +552,9 @@ namespace MercadoTesteAZ.Migrations
                     b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Produtos.HistoricoPreco", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Produtos.HistoricoPreco", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.Produtos.Produto", "Produto")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Produtos.Produto", "Produto")
                         .WithMany("HistoricoDePrecos")
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -515,24 +563,28 @@ namespace MercadoTesteAZ.Migrations
                     b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Produtos.Produto", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Produtos.Produto", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.Categorias.Categoria", "Categoria")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Categorias.Categoria", "Categoria")
                         .WithMany("Produtos")
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MercadoTesteAZ.Models.Empresa.Vendedor", null)
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Empresas.Vendedor", "Vendedor")
                         .WithMany("MeusProdutos")
-                        .HasForeignKey("VendedorId");
+                        .HasForeignKey("VendedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categoria");
+
+                    b.Navigation("Vendedor");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.SharedValues.DadosGeograficos", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.SharedValues.DadosGeograficos", b =>
                 {
-                    b.HasOne("MercadoTesteAZ.Models.Clientes.Cliente", "Cliente")
+                    b.HasOne("MercadoTesteAZ.Domain.Entities.Clientes.Cliente", "Cliente")
                         .WithMany("MeusEnderecosDeEntrega")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -541,12 +593,12 @@ namespace MercadoTesteAZ.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Categorias.Categoria", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Categorias.Categoria", b =>
                 {
                     b.Navigation("Produtos");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Clientes.Cliente", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Clientes.Cliente", b =>
                 {
                     b.Navigation("MeusEnderecosDeEntrega");
 
@@ -555,24 +607,24 @@ namespace MercadoTesteAZ.Migrations
                     b.Navigation("MeusPedidos");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Clientes.MeusDadosPagamento", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Clientes.MeusDadosPagamento", b =>
                 {
                     b.Navigation("MeusCartoes");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Empresa.Vendedor", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Empresas.Vendedor", b =>
                 {
-                    b.Navigation("ContaBancaria");
+                    b.Navigation("ContasBancarias");
 
                     b.Navigation("MeusProdutos");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Pedidos.Pedido", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Pedidos.Pedido", b =>
                 {
                     b.Navigation("ProdutosComprados");
                 });
 
-            modelBuilder.Entity("MercadoTesteAZ.Models.Produtos.Produto", b =>
+            modelBuilder.Entity("MercadoTesteAZ.Domain.Entities.Produtos.Produto", b =>
                 {
                     b.Navigation("HistoricoDePrecos");
                 });

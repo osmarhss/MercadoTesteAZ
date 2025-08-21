@@ -1,7 +1,7 @@
 ﻿using MercadoTesteAZ.Application.AppServices.Aggregations;
-using MercadoTesteAZ.Application.AppServices.Vendedores;
-using MercadoTesteAZ.Application.ViewModels;
+using MercadoTesteAZ.Application.AppServices.Empresas.Vendedores;
 using MercadoTesteAZ.Domain.Exceptions;
+using MercadoTesteAZ.Presentation.ViewModels.Vendedores;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MercadoTesteAZ.Presentation.Controllers

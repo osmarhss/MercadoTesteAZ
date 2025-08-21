@@ -1,8 +1,8 @@
 ﻿using MercadoTesteAZ.Application.AppServices.Produtos;
 using MercadoTesteAZ.Application.DTOs;
-using MercadoTesteAZ.Application.ViewModels.Produtos;
 using MercadoTesteAZ.Domain.Entities.Produtos;
 using MercadoTesteAZ.Domain.Exceptions;
+using MercadoTesteAZ.Presentation.ViewModels.Produtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MercadoTesteAZ.Presentation.Controllers

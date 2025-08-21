@@ -1,5 +1,4 @@
-﻿using MercadoTesteAZ.Application.ViewModels;
-using MercadoTesteAZ.Domain.Entities.Categorias;
+﻿using MercadoTesteAZ.Domain.Entities.Categorias;
 using MercadoTesteAZ.Domain.Entities.Empresas;
 using MercadoTesteAZ.Domain.Entities.Interfaces;
 

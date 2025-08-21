@@ -1,7 +1,7 @@
 ﻿using MercadoTesteAZ.Application.AppServices.Base;
 using MercadoTesteAZ.Application.DTOs;
-using MercadoTesteAZ.Application.ViewModels;
 using MercadoTesteAZ.Domain.Entities.Usuário;
+using MercadoTesteAZ.Presentation.ViewModels.Usuarios;
 
 namespace MercadoTesteAZ.Application.AppServices.Usuarios
 {

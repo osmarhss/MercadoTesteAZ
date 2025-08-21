@@ -1,5 +1,4 @@
-﻿using MercadoTesteAZ.Application.ViewModels;
-using MercadoTesteAZ.Domain.Entities.Interfaces;
+﻿using MercadoTesteAZ.Domain.Entities.Interfaces;
 using MercadoTesteAZ.Domain.Enums;
 
 namespace MercadoTesteAZ.Domain.Entities.Usuário

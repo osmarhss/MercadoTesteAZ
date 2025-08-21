@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MercadoTesteAZ.Application.ViewModels.Categorias;
+using MercadoTesteAZ.Presentation.ViewModels.Categorias;
 
 namespace MercadoTesteAZ.Presentation.Validators
 {

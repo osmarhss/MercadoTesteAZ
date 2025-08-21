@@ -1,10 +1,10 @@
 ﻿using MercadoTesteAZ.Application.AppServices.Base;
 using MercadoTesteAZ.Application.DTOs;
 using MercadoTesteAZ.Application.Mappings.Interfaces;
-using MercadoTesteAZ.Application.ViewModels.Produtos;
 using MercadoTesteAZ.Domain.Entities.Produtos;
 using MercadoTesteAZ.Infra.Repositories;
 using MercadoTesteAZ.Infra.Repositories.Produtos;
+using MercadoTesteAZ.Presentation.ViewModels.Produtos;
 
 namespace MercadoTesteAZ.Application.AppServices.Produtos
 {

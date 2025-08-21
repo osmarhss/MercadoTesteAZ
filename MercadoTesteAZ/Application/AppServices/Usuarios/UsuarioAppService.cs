@@ -1,10 +1,10 @@
 ﻿using MercadoTesteAZ.Application.AppServices.Base;
 using MercadoTesteAZ.Application.DTOs;
 using MercadoTesteAZ.Application.Mappings.Interfaces;
-using MercadoTesteAZ.Application.ViewModels;
 using MercadoTesteAZ.Domain.Entities.Usuário;
 using MercadoTesteAZ.Infra.Repositories;
 using MercadoTesteAZ.Infra.Repositories.Usuarios;
+using MercadoTesteAZ.Presentation.ViewModels.Usuarios;
 
 namespace MercadoTesteAZ.Application.AppServices.Usuarios
 {

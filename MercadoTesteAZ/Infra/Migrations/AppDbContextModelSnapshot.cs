@@ -183,13 +183,13 @@ namespace MercadoTesteAZ.Infra.Migrations
                     b.Property<int>("TipoConta")
                         .HasColumnType("int");
 
-                    b.Property<string>("VendedorId")
+                    b.Property<string>("ProprietarioId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VendedorId");
+                    b.HasIndex("ProprietarioId");
 
                     b.ToTable("ContasBancarias");
                 });
@@ -243,7 +243,7 @@ namespace MercadoTesteAZ.Infra.Migrations
                     b.Property<int>("StatusPedido")
                         .HasColumnType("int");
 
-                    b.Property<string>("VendedorId")
+                    b.Property<string>("ProprietarioId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
@@ -253,7 +253,7 @@ namespace MercadoTesteAZ.Infra.Migrations
 
                     b.HasIndex("EnderecoEntregaId");
 
-                    b.HasIndex("VendedorId");
+                    b.HasIndex("ProprietarioId");
 
                     b.ToTable("Pedidos");
                 });
@@ -344,7 +344,7 @@ namespace MercadoTesteAZ.Infra.Migrations
                     b.Property<DateTime?>("UltimaAtualizacao")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("VendedorId")
+                    b.Property<string>("ProprietarioId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
@@ -352,7 +352,7 @@ namespace MercadoTesteAZ.Infra.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("VendedorId");
+                    b.HasIndex("ProprietarioId");
 
                     b.ToTable("Produtos");
                 });
@@ -488,7 +488,7 @@ namespace MercadoTesteAZ.Infra.Migrations
                 {
                     b.HasOne("MercadoTesteAZ.Domain.Entities.Empresas.Vendedor", "Vendedor")
                         .WithMany("ContasBancarias")
-                        .HasForeignKey("VendedorId")
+                        .HasForeignKey("ProprietarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -522,7 +522,7 @@ namespace MercadoTesteAZ.Infra.Migrations
 
                     b.HasOne("MercadoTesteAZ.Domain.Entities.Empresas.Vendedor", "Vendedor")
                         .WithMany()
-                        .HasForeignKey("VendedorId")
+                        .HasForeignKey("ProprietarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -573,7 +573,7 @@ namespace MercadoTesteAZ.Infra.Migrations
 
                     b.HasOne("MercadoTesteAZ.Domain.Entities.Empresas.Vendedor", "Vendedor")
                         .WithMany("MeusProdutos")
-                        .HasForeignKey("VendedorId")
+                        .HasForeignKey("ProprietarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

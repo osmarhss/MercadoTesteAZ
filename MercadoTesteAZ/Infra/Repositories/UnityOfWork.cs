@@ -6,6 +6,7 @@ using MercadoTesteAZ.Infra.Repositories.Pagamentos;
 using MercadoTesteAZ.Infra.Repositories.Pedidos;
 using MercadoTesteAZ.Infra.Repositories.Produtos;
 using MercadoTesteAZ.Infra.Repositories.Usuarios;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MercadoTesteAZ.Infra.Repositories
 {
@@ -19,6 +20,7 @@ namespace MercadoTesteAZ.Infra.Repositories
         private IContaBancariaRepository? _contaBancariaRepository;
         private IPedidoRepository? _pedidoRepository;
         private IUsuarioRepository? _usuarioRepository;
+        private IDbContextTransaction? _transaction;
         public AppDbContext _context;
 
         public UnityOfWork(AppDbContext context)
@@ -39,5 +41,34 @@ namespace MercadoTesteAZ.Infra.Repositories
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task BeginTransactionAsync()
+        {
+            if (_transaction is not null)
+                return;
+
+            _transaction = await _context.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            if (_transaction is not null)
+            {
+                await _transaction.CommitAsync();
+                await _transaction.DisposeAsync();
+                _transaction = null;
+            }
+        }
+
+        public async Task RollbackTransactionAsync()
+        {
+            if (_transaction is not null)
+            {
+                await _transaction.RollbackAsync();
+                await _transaction.DisposeAsync();
+                _transaction = null;
+            }
+        }
+
     }
 }

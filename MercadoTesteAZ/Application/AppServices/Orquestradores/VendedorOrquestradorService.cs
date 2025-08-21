@@ -1,10 +1,9 @@
-﻿using MercadoTesteAZ.Application.AppServices.Usuarios;
-using MercadoTesteAZ.Application.AppServices.Vendedores;
-using MercadoTesteAZ.Application.ViewModels;
-using MercadoTesteAZ.Domain.Entities.Empresas;
+﻿using MercadoTesteAZ.Application.AppServices.Empresas.Vendedores;
+using MercadoTesteAZ.Application.AppServices.MeiosDePagamento;
+using MercadoTesteAZ.Application.AppServices.Usuarios;
+using MercadoTesteAZ.Domain.Exceptions;
 using MercadoTesteAZ.Infra.Repositories;
-using MercadoTesteAZ.Infra.Repositories.Empresa;
-using MercadoTesteAZ.Infra.Repositories.Usuarios;
+using MercadoTesteAZ.Presentation.ViewModels.Vendedores;
 
 namespace MercadoTesteAZ.Application.AppServices.Aggregations
 {
@@ -12,22 +11,48 @@ namespace MercadoTesteAZ.Application.AppServices.Aggregations
     {
         private readonly IUsuarioAppService _usuarioAppServ;
         private readonly IVendedorAppService _vendedorAppServ;
-        private readonly IVendedorRepository _vendedorRepository;
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IContaBancariaAppService _contaBancariaAppService;
         private readonly IUnityOfWork _uow;
 
-        public VendedorOrquestradorService(IUsuarioAppService usuarioAppServ, IVendedorAppService vendedorAppServ, IVendedorRepository vendedorRepository, IUsuarioRepository usuarioRepository, IUnityOfWork uow)
+        public VendedorOrquestradorService(IUsuarioAppService usuarioAppServ, IVendedorAppService vendedorAppServ, IContaBancariaAppService contaBancariaAppService, IUnityOfWork uow)
         {
             _vendedorAppServ = vendedorAppServ;
-            _vendedorRepository = vendedorRepository;
             _usuarioAppServ = usuarioAppServ;
-            _usuarioRepository = usuarioRepository;
+            _contaBancariaAppService = contaBancariaAppService;
             _uow = uow;
         }
 
-        public Task<string> AdicionarComUsuarioAsync(VendedorViewModel entity)
+        public async Task<string> AdicionarComUsuarioAsync(VendedorViewModel vm)
         {
-            throw new NotImplementedException();
+            if (vm.UsuarioViewModel is null)
+                throw new ExcecaoPersonalizada("Usuario não pode ser nulo");
+
+            await _uow.BeginTransactionAsync();
+
+            try
+            {
+                var usuarioId = await _usuarioAppServ.AdicionarAsync(vm.UsuarioViewModel);
+                vm.UsuarioId = usuarioId;
+
+                var vendedorId = await _vendedorAppServ.AdicionarAsync(vm);
+                await _uow.CommitAsync();
+                await _uow.CommitTransactionAsync();
+
+                if(vm.ContaBancaria !=  null && vm.ContaBancaria.Any())
+                {
+                    foreach (var conta in vm.ContaBancaria)
+                    {
+                        await _contaBancariaAppService.AdicionarSemCommitAsync(conta);
+                    }
+                }
+
+                return vendedorId;
+            }
+            catch (Exception e)
+            {
+                await _uow.RollbackTransactionAsync();
+                throw new ExcecaoPersonalizada($"{e.Message}");
+            }
         }
     }
 }

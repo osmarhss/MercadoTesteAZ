@@ -1,5 +1,4 @@
 ﻿using MercadoTesteAZ.Domain.Entities.Interfaces;
-using MercadoTesteAZ.Application.ViewModels;
 
 namespace MercadoTesteAZ.Domain.Entities.Produtos
 {

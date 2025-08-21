@@ -20,6 +20,7 @@ namespace MercadoTesteAZ.Infra.Context
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<MeusDadosPagamento> MeusDadosPagamentos { get; set; }
         public DbSet<Vendedor> Vendedores { get; set; }
+        public DbSet<Transportadora> Transportadoras { get; set; }
         public DbSet<CartaoDeCredito> CartoesDeCredito { get; set; }
         public DbSet<ContaBancaria> ContasBancarias { get; set; }
         public DbSet<PayPal> ContasPayPal { get; set; }

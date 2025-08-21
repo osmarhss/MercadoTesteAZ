@@ -10,14 +10,17 @@ namespace MercadoTesteAZ.Infra.Repositories
 {
     public interface IUnityOfWork
     {
-        public ICategoriaRepository CategoriaRepository { get; }
-        public IProdutoRepository ProdutoRepository { get; }
-        public IClienteRepository ClienteRepository { get; }
-        public IVendedorRepository VendedorRepository { get; }
-        public ICartaoDeCreditoRepository CartaoDeCreditoRepository { get; }
-        public IContaBancariaRepository ContaBancariaRepository { get; }
-        public IPedidoRepository PedidoRepository { get; }
-        public IUsuarioRepository UsuarioRepository { get; }
-        public Task CommitAsync();
+        ICategoriaRepository CategoriaRepository { get; }
+        IProdutoRepository ProdutoRepository { get; }
+        IClienteRepository ClienteRepository { get; }
+        IVendedorRepository VendedorRepository { get; }
+        ICartaoDeCreditoRepository CartaoDeCreditoRepository { get; }
+        IContaBancariaRepository ContaBancariaRepository { get; }
+        IPedidoRepository PedidoRepository { get; }
+        IUsuarioRepository UsuarioRepository { get; }
+        Task CommitAsync();
+        Task BeginTransactionAsync();
+        Task CommitTransactionAsync();
+        Task RollbackTransactionAsync();
     }
 }

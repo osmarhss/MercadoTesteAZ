@@ -1,9 +1,9 @@
 ﻿using MercadoTesteAZ.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using MercadoTesteAZ.Application.AppServices.Categorias;
-using MercadoTesteAZ.Application.ViewModels.Categorias;
 using MercadoTesteAZ.Application.DTOs;
 using MercadoTesteAZ.Domain.Entities.Categorias;
+using MercadoTesteAZ.Presentation.ViewModels.Categorias;
 
 namespace MercadoTesteAZ.Presentation.Controllers
 {

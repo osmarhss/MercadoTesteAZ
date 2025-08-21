@@ -1,11 +1,11 @@
 ﻿using MercadoTesteAZ.Application.AppServices.Base;
 using MercadoTesteAZ.Application.DTOs;
 using MercadoTesteAZ.Application.Mappings.Interfaces;
-using MercadoTesteAZ.Application.ViewModels.Categorias;
 using MercadoTesteAZ.Domain.Entities.Categorias;
 using MercadoTesteAZ.Domain.Exceptions;
 using MercadoTesteAZ.Infra.Repositories;
 using MercadoTesteAZ.Infra.Repositories.Categorias;
+using MercadoTesteAZ.Presentation.ViewModels.Categorias;
 
 namespace MercadoTesteAZ.Application.AppServices.Categorias
 {

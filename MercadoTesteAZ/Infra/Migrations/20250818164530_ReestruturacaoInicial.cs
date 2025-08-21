@@ -430,7 +430,7 @@ namespace MercadoTesteAZ.Infra.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ContasBancarias_VendedorId",
                 table: "ContasBancarias",
-                column: "VendedorId");
+                column: "ProprietarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContasPayPal_ClienteId",
@@ -465,7 +465,7 @@ namespace MercadoTesteAZ.Infra.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Pedidos_VendedorId",
                 table: "Pedidos",
-                column: "VendedorId");
+                column: "ProprietarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PedidosProdutos_ProdutoId",
@@ -480,7 +480,7 @@ namespace MercadoTesteAZ.Infra.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Produtos_VendedorId",
                 table: "Produtos",
-                column: "VendedorId");
+                column: "ProprietarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vendedores_UsuarioId",

@@ -1,4 +1,5 @@
-﻿using MercadoTesteAZ.Domain.Entities.Categorias;
+﻿using MercadoTesteAZ.Domain.Entities;
+using MercadoTesteAZ.Domain.Entities.Categorias;
 using MercadoTesteAZ.Domain.Entities.Clientes;
 using MercadoTesteAZ.Domain.Entities.Empresas;
 using MercadoTesteAZ.Domain.Entities.MeiosDePagamento;
@@ -6,11 +7,12 @@ using MercadoTesteAZ.Domain.Entities.Pedidos;
 using MercadoTesteAZ.Domain.Entities.Produtos;
 using MercadoTesteAZ.Domain.Entities.SharedValues;
 using MercadoTesteAZ.Domain.Entities.Usuário;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MercadoTesteAZ.Infra.Context
 {
-    public class AppDbContext : DbContext 
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -34,6 +36,8 @@ namespace MercadoTesteAZ.Infra.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<PedidoProduto>()
                 .HasKey(pp => new { pp.PedidoId, pp.ProdutoId });
 
@@ -46,6 +50,12 @@ namespace MercadoTesteAZ.Infra.Context
                 .HasOne(pp => pp.Produto)
                 .WithMany()
                 .HasForeignKey(pp => pp.ProdutoId);
+
+            modelBuilder.Entity<ContaBancaria>(entity =>
+            {
+                entity.Property(e => e.ProprietarioId)
+                      .IsRequired();
+            });
         }
 
     }

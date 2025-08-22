@@ -4,6 +4,7 @@ using MercadoTesteAZ.Application.AppServices.Aggregations;
 using MercadoTesteAZ.Application.AppServices.Base;
 using MercadoTesteAZ.Application.AppServices.Categorias;
 using MercadoTesteAZ.Application.AppServices.Empresas.Vendedores;
+using MercadoTesteAZ.Application.AppServices.MeiosDePagamento;
 using MercadoTesteAZ.Application.AppServices.Produtos;
 using MercadoTesteAZ.Application.AppServices.Usuarios;
 using MercadoTesteAZ.Application.DTOs;
@@ -14,6 +15,7 @@ using MercadoTesteAZ.Application.Mappings.Interfaces;
 using MercadoTesteAZ.Application.Mappings.Produtos;
 using MercadoTesteAZ.Application.Mappings.Usuarios;
 using MercadoTesteAZ.Application.Mappings.Vendedores;
+using MercadoTesteAZ.Domain.Entities;
 using MercadoTesteAZ.Domain.Entities.Categorias;
 using MercadoTesteAZ.Domain.Entities.Empresas;
 using MercadoTesteAZ.Domain.Entities.MeiosDePagamento;
@@ -24,6 +26,7 @@ using MercadoTesteAZ.Infra.Repositories;
 using MercadoTesteAZ.Infra.Repositories.Categorias;
 using MercadoTesteAZ.Infra.Repositories.Clientes;
 using MercadoTesteAZ.Infra.Repositories.Empresa;
+using MercadoTesteAZ.Infra.Repositories.Pagamentos;
 using MercadoTesteAZ.Infra.Repositories.Produtos;
 using MercadoTesteAZ.Infra.Repositories.Usuarios;
 using MercadoTesteAZ.Presentation.Validators;
@@ -33,7 +36,11 @@ using MercadoTesteAZ.Presentation.ViewModels.HistoricosDePreco;
 using MercadoTesteAZ.Presentation.ViewModels.Produtos;
 using MercadoTesteAZ.Presentation.ViewModels.Usuarios;
 using MercadoTesteAZ.Presentation.ViewModels.Vendedores;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace MercadoTesteAZ
 {
@@ -50,9 +57,11 @@ namespace MercadoTesteAZ
             builder.Services.AddScoped(typeof(IAppServiceReadOnly<,>), typeof(AppServiceReadOnly<,>));
             builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+            builder.Services.AddScoped<IContaBancariaRepository, ContaBancariaRepository>();
             builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
             builder.Services.AddScoped<IVendedorRepository, VendedorRepository>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            builder.Services.AddScoped<ITransportadoraRepository, TransportadoraRepository>();
             builder.Services.AddScoped<IProdutoAppService<ProdutoVendedorViewModel, ProdutoDraft, Produto>, ProdutoAppService>();
             builder.Services.AddScoped<IProdutoAppServiceReadOnly<ProdutoConsumidorViewModel, Produto>, ProdutoAppServiceReadOnly>();
             builder.Services.AddScoped<ICategoriaAppService<CategoriaAdminViewModel, CategoriaDraft, Categoria>, CategoriaAppService>();
@@ -60,6 +69,7 @@ namespace MercadoTesteAZ
             builder.Services.AddScoped<IProdutoAppServiceReadOnly<ProdutoConsumidorViewModel, Produto>, ProdutoAppServiceReadOnly>();
             builder.Services.AddScoped<IVendedorAppService, VendedorAppService>();
             builder.Services.AddScoped<IUsuarioAppService, UsuarioAppService>();
+            builder.Services.AddScoped<IContaBancariaAppService, ContaBancariaAppService>();
             builder.Services.AddScoped<IVendedorOrquestradorService, VendedorOrquestradorService>();
             builder.Services.AddScoped<IMapper<CategoriaAdminViewModel, CategoriaDraft, Categoria>, CategoriaMapper>();
             builder.Services.AddScoped<IMapperToViewModel<CategoriaConsumidorViewModel, Categoria>, CategoriaConsumidorMapper>();
@@ -71,8 +81,38 @@ namespace MercadoTesteAZ
             builder.Services.AddScoped<IMapperToViewModel<HistoricoPrecoViewModel, HistoricoPreco>, HistoricoPrecoMapper>();
             builder.Services.AddScoped<IUnityOfWork, UnityOfWork>();
 
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().
+                AddEntityFrameworkStores<AppDbContext>().
+                AddDefaultTokenProviders();
+
             string mySqlConecction = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(mySqlConecction, ServerVersion.AutoDetect(mySqlConecction)));
+
+            var secretKey = builder.Configuration["JWT:SecretKey"] ?? throw new ArgumentException("Key inválida");
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidAudience = builder.Configuration["JWT:ValidAudience"],
+                    ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                };
+            });
+
+            //builder.Services.AddAuthorization();
+            //builder.Services.AddAuthentication("Bearer").AddBearerToken();
 
             var app = builder.Build();
 

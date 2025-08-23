@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MercadoTesteAZ.Application.AppServices.Aggregations;
+using MercadoTesteAZ.Application.AppServices.Auth;
 using MercadoTesteAZ.Application.AppServices.Base;
 using MercadoTesteAZ.Application.AppServices.Categorias;
 using MercadoTesteAZ.Application.AppServices.Empresas.Vendedores;
@@ -29,6 +30,7 @@ using MercadoTesteAZ.Infra.Repositories.Empresa;
 using MercadoTesteAZ.Infra.Repositories.Pagamentos;
 using MercadoTesteAZ.Infra.Repositories.Produtos;
 using MercadoTesteAZ.Infra.Repositories.Usuarios;
+using MercadoTesteAZ.Presentation.Extensions;
 using MercadoTesteAZ.Presentation.Validators;
 using MercadoTesteAZ.Presentation.ViewModels.Categorias;
 using MercadoTesteAZ.Presentation.ViewModels.ContasBancarias;
@@ -69,6 +71,8 @@ namespace MercadoTesteAZ
             builder.Services.AddScoped<IProdutoAppServiceReadOnly<ProdutoConsumidorViewModel, Produto>, ProdutoAppServiceReadOnly>();
             builder.Services.AddScoped<IVendedorAppService, VendedorAppService>();
             builder.Services.AddScoped<IUsuarioAppService, UsuarioAppService>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IContaBancariaAppService, ContaBancariaAppService>();
             builder.Services.AddScoped<IVendedorOrquestradorService, VendedorOrquestradorService>();
             builder.Services.AddScoped<IMapper<CategoriaAdminViewModel, CategoriaDraft, Categoria>, CategoriaMapper>();
@@ -111,9 +115,6 @@ namespace MercadoTesteAZ
                 };
             });
 
-            //builder.Services.AddAuthorization();
-            //builder.Services.AddAuthentication("Bearer").AddBearerToken();
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -128,9 +129,8 @@ namespace MercadoTesteAZ
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.UseMiddleware<ExceptionMiddleware>();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

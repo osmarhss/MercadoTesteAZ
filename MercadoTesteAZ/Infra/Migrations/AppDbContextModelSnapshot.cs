@@ -537,7 +537,7 @@ namespace MercadoTesteAZ.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("UserInput")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 

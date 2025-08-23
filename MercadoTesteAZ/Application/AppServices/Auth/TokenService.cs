@@ -13,7 +13,6 @@ namespace MercadoTesteAZ.Application.AppServices.Auth
         {
             var secretKey = _config["JWT:SecretKey"] ?? throw new InvalidOperationException("Secret key não foi obtida");
             
-
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(secretKey)), SecurityAlgorithms.HmacSha256);
 

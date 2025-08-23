@@ -1,6 +1,6 @@
-﻿namespace MercadoTesteAZ.Presentation.ViewModels.Auth
+﻿namespace MercadoTesteAZ.Application.DTOs
 {
-    public class LoginModel
+    public class LoginDto
     {
         public string UserInput { get; set; }
         public string Password { get; set; }

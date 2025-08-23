@@ -7,6 +7,12 @@
             Mensagem = mensagem;
         }
 
-        public string Mensagem { get; set; }
+        public ExcecaoPersonalizada(string mensagem, int statusCode = StatusCodes.Status400BadRequest) : base(mensagem)
+        {
+            Mensagem = mensagem;
+            StatusCode = statusCode;
+        }
+        public int StatusCode { get; }
+        public string Mensagem { get; }
     }
 }

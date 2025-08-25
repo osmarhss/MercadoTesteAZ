@@ -7,36 +7,31 @@ using MercadoTesteAZ.Application.AppServices.Categorias;
 using MercadoTesteAZ.Application.AppServices.Empresas.Vendedores;
 using MercadoTesteAZ.Application.AppServices.MeiosDePagamento;
 using MercadoTesteAZ.Application.AppServices.Produtos;
-using MercadoTesteAZ.Application.AppServices.Usuarios;
 using MercadoTesteAZ.Application.DTOs;
 using MercadoTesteAZ.Application.Mappings.Categorias;
 using MercadoTesteAZ.Application.Mappings.ContasBancárias;
 using MercadoTesteAZ.Application.Mappings.HistoricoPrecos;
 using MercadoTesteAZ.Application.Mappings.Interfaces;
 using MercadoTesteAZ.Application.Mappings.Produtos;
-using MercadoTesteAZ.Application.Mappings.Usuarios;
 using MercadoTesteAZ.Application.Mappings.Vendedores;
-using MercadoTesteAZ.Domain.Entities;
 using MercadoTesteAZ.Domain.Entities.Categorias;
 using MercadoTesteAZ.Domain.Entities.Empresas;
 using MercadoTesteAZ.Domain.Entities.MeiosDePagamento;
 using MercadoTesteAZ.Domain.Entities.Produtos;
-using MercadoTesteAZ.Domain.Entities.Usuário;
+using MercadoTesteAZ.Domain.Entities.Usuários;
 using MercadoTesteAZ.Infra.Context;
 using MercadoTesteAZ.Infra.Repositories;
 using MercadoTesteAZ.Infra.Repositories.Categorias;
 using MercadoTesteAZ.Infra.Repositories.Clientes;
 using MercadoTesteAZ.Infra.Repositories.Empresa;
 using MercadoTesteAZ.Infra.Repositories.Pagamentos;
-using MercadoTesteAZ.Infra.Repositories.Produtos;
-using MercadoTesteAZ.Infra.Repositories.Usuarios;
+using MercadoTesteAZ.Infra.Repositories.Produtos;  
 using MercadoTesteAZ.Presentation.Extensions;
 using MercadoTesteAZ.Presentation.Validators;
 using MercadoTesteAZ.Presentation.ViewModels.Categorias;
 using MercadoTesteAZ.Presentation.ViewModels.ContasBancarias;
 using MercadoTesteAZ.Presentation.ViewModels.HistoricosDePreco;
 using MercadoTesteAZ.Presentation.ViewModels.Produtos;
-using MercadoTesteAZ.Presentation.ViewModels.Usuarios;
 using MercadoTesteAZ.Presentation.ViewModels.Vendedores;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -62,7 +57,6 @@ namespace MercadoTesteAZ
             builder.Services.AddScoped<IContaBancariaRepository, ContaBancariaRepository>();
             builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
             builder.Services.AddScoped<IVendedorRepository, VendedorRepository>();
-            builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             builder.Services.AddScoped<ITransportadoraRepository, TransportadoraRepository>();
             builder.Services.AddScoped<IProdutoAppService<ProdutoVendedorViewModel, ProdutoDraft, Produto>, ProdutoAppService>();
             builder.Services.AddScoped<IProdutoAppServiceReadOnly<ProdutoConsumidorViewModel, Produto>, ProdutoAppServiceReadOnly>();
@@ -70,9 +64,9 @@ namespace MercadoTesteAZ
             builder.Services.AddScoped<ICategoriaAppServiceReadOnly<CategoriaConsumidorViewModel, Categoria>, CategoriaAppServiceReadOnly>();
             builder.Services.AddScoped<IProdutoAppServiceReadOnly<ProdutoConsumidorViewModel, Produto>, ProdutoAppServiceReadOnly>();
             builder.Services.AddScoped<IVendedorAppService, VendedorAppService>();
-            builder.Services.AddScoped<IUsuarioAppService, UsuarioAppService>();
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IRoleService, RoleService>();
             builder.Services.AddScoped<IContaBancariaAppService, ContaBancariaAppService>();
             builder.Services.AddScoped<IVendedorOrquestradorService, VendedorOrquestradorService>();
             builder.Services.AddScoped<IMapper<CategoriaAdminViewModel, CategoriaDraft, Categoria>, CategoriaMapper>();
@@ -81,7 +75,6 @@ namespace MercadoTesteAZ
             builder.Services.AddScoped<IMapper<ProdutoVendedorViewModel, ProdutoDraft, Produto>, ProdutoVendedorMapper>();
             builder.Services.AddScoped<IMapper<VendedorViewModel, VendedorDraft, Vendedor>, VendedorMapping>();
             builder.Services.AddScoped<IMapper<ContaBancariaViewModel, ContaBancariaDraft, ContaBancaria>, ContaBancariaMapper>();
-            builder.Services.AddScoped<IMapper<UsuarioViewModel, UsuarioDraft, Usuario>, UsuarioMapper>();
             builder.Services.AddScoped<IMapperToViewModel<HistoricoPrecoViewModel, HistoricoPreco>, HistoricoPrecoMapper>();
             builder.Services.AddScoped<IUnityOfWork, UnityOfWork>();
 
@@ -113,6 +106,15 @@ namespace MercadoTesteAZ
                     ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
+            });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("Vendor", policy => policy.RequireRole("Vendor"));
+                options.AddPolicy("User", policy => policy.RequireRole("User"));
+                options.AddPolicy("VendorManager", policy => policy.RequireRole("Vendor", "Admin"));
+                options.AddPolicy("UserManager", policy => policy.RequireRole("User", "Admin"));
             });
 
             var app = builder.Build();

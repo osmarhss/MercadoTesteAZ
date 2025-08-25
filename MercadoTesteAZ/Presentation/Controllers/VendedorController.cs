@@ -2,6 +2,7 @@
 using MercadoTesteAZ.Application.AppServices.Empresas.Vendedores;
 using MercadoTesteAZ.Domain.Exceptions;
 using MercadoTesteAZ.Presentation.ViewModels.Vendedores;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MercadoTesteAZ.Presentation.Controllers
@@ -54,10 +55,7 @@ namespace MercadoTesteAZ.Presentation.Controllers
 
             try
             {
-                if (vm.UsuarioViewModel is null)
-                    return BadRequest("Usuário base não cadastrado");
-
-                var vendedorId = await _vendedorOrquestradorServ.AdicionarComUsuarioAsync(vm);
+                var vendedorId = await _vendedorAppServ.AdicionarAsync(vm);
 
                 return new CreatedAtRouteResult("ObterPorVendedorId", new { id = vendedorId });
             }
@@ -68,6 +66,7 @@ namespace MercadoTesteAZ.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "Vendor")]
         public async Task<ActionResult<VendedorViewModel>> Atualizar([FromBody] VendedorViewModel vendedorVM, string id)
         {
             if (!ModelState.IsValid)

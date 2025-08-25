@@ -1,12 +1,11 @@
-﻿using MercadoTesteAZ.Domain.Entities;
-using MercadoTesteAZ.Domain.Entities.Categorias;
+﻿using MercadoTesteAZ.Domain.Entities.Categorias;
 using MercadoTesteAZ.Domain.Entities.Clientes;
 using MercadoTesteAZ.Domain.Entities.Empresas;
 using MercadoTesteAZ.Domain.Entities.MeiosDePagamento;
 using MercadoTesteAZ.Domain.Entities.Pedidos;
 using MercadoTesteAZ.Domain.Entities.Produtos;
 using MercadoTesteAZ.Domain.Entities.SharedValues;
-using MercadoTesteAZ.Domain.Entities.Usuário;
+using MercadoTesteAZ.Domain.Entities.Usuários;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +31,6 @@ namespace MercadoTesteAZ.Infra.Context
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<DadosContato> DadosContatos { get; set; }
         public DbSet<DadosGeograficos> DadosGeograficos { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

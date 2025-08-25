@@ -72,6 +72,5 @@ namespace MercadoTesteAZ.Presentation.Controllers
 
             return NoContent();
         }
-
     }
 }

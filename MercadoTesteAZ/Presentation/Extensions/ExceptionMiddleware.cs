@@ -11,19 +11,19 @@ namespace MercadoTesteAZ.Presentation.Extensions
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext content)
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                await _next(content);
+                await _next(context);
             }
             catch (ExcecaoPersonalizada ex)
             {
-                await HandleExceptionAsync(content, ex.Message, ex.StatusCode);
+                await HandleExceptionAsync(context, ex.Message, ex.StatusCode);
             }
             catch (Exception ex)
             {
-                await HandleExceptionAsync(content, ex.Message, StatusCodes.Status500InternalServerError);
+                await HandleExceptionAsync(context, ex.Message, StatusCodes.Status500InternalServerError);
             }
         }
 

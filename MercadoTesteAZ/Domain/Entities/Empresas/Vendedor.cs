@@ -1,7 +1,7 @@
 ﻿using MercadoTesteAZ.Domain.Entities.Interfaces;
 using MercadoTesteAZ.Domain.Entities.MeiosDePagamento;
 using MercadoTesteAZ.Domain.Entities.Produtos;
-using MercadoTesteAZ.Domain.Entities.Usuário;
+using MercadoTesteAZ.Domain.Entities.Usuários;
 
 namespace MercadoTesteAZ.Domain.Entities.Empresas
 {
@@ -10,7 +10,7 @@ namespace MercadoTesteAZ.Domain.Entities.Empresas
         private readonly List<ContaBancaria> _contaBancariaList = new();
         private readonly List<Produto> _produtosList = new();
         protected Vendedor() { }
-        private Vendedor(string id, string razaoSocial, string nomeFantasia, string cnpj, int qtdVendida, string usuarioId, double? notaAvaliacao = null) 
+        private Vendedor(string id, string razaoSocial, string nomeFantasia, string cnpj, int qtdVendida, string appUserId, double? notaAvaliacao = null) 
         {
             Id = id;
             RazaoSocial = razaoSocial;
@@ -18,7 +18,7 @@ namespace MercadoTesteAZ.Domain.Entities.Empresas
             CNPJ = cnpj;
             QtdDeVendas = qtdVendida;
             NotaAvaliacao = notaAvaliacao;
-            UsuarioId = usuarioId;
+            ApplicationUserId = appUserId;
         }
 
         public string Id { get; private set; }
@@ -27,8 +27,8 @@ namespace MercadoTesteAZ.Domain.Entities.Empresas
         public string CNPJ { get; private set; }
         public int QtdDeVendas { get; private set; }
         public double? NotaAvaliacao { get; private set; }
-        public string UsuarioId { get; private set; }
-        public Usuario? Usuario { get; private set; }
+        public string ApplicationUserId { get; private set; }
+        public ApplicationUser? User { get; private set; }
         public IReadOnlyCollection<ContaBancaria> ContasBancarias => _contaBancariaList.AsReadOnly();
         public IReadOnlyCollection<Produto> MeusProdutos => _produtosList.AsReadOnly();
 

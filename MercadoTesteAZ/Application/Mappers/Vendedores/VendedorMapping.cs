@@ -31,7 +31,7 @@ namespace MercadoTesteAZ.Application.Mappings.Vendedores
                 RazaoSocial = entity.RazaoSocial,
                 NomeFantasia = entity.NomeFantasia,
                 CNPJ = entity.CNPJ,
-                UsuarioId = entity.UsuarioId,
+                UsuarioId = entity.ApplicationUserId,
                 NotaAvaliacao = entity.NotaAvaliacao,
                 ContaBancaria = entity.ContasBancarias.Select(c => _contasMapping.ToViewModel(c))
 

@@ -60,7 +60,7 @@ namespace MercadoTesteAZ.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UsuarioId")
+                    b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
@@ -68,7 +68,7 @@ namespace MercadoTesteAZ.Migrations
 
                     b.HasIndex("DadosContatoId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Clientes");
                 });
@@ -145,13 +145,13 @@ namespace MercadoTesteAZ.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UsuarioId")
+                    b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Vendedores");
                 });
@@ -422,7 +422,7 @@ namespace MercadoTesteAZ.Migrations
                     b.Property<string>("Telefone")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UsuarioId")
+                    b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -693,7 +693,7 @@ namespace MercadoTesteAZ.Migrations
 
                     b.HasOne("MercadoTesteAZ.Domain.Entities.Usuário.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -728,7 +728,7 @@ namespace MercadoTesteAZ.Migrations
                 {
                     b.HasOne("MercadoTesteAZ.Domain.Entities.Usuário.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

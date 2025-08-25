@@ -686,7 +686,7 @@ namespace MercadoTesteAZ.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_UsuarioId",
                 table: "Clientes",
-                column: "UsuarioId");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContasBancarias_VendedorId",
@@ -756,7 +756,7 @@ namespace MercadoTesteAZ.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Vendedores_UsuarioId",
                 table: "Vendedores",
-                column: "UsuarioId");
+                column: "ApplicationUserId");
         }
 
         /// <inheritdoc />

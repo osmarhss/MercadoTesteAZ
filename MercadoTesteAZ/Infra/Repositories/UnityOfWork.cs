@@ -5,7 +5,6 @@ using MercadoTesteAZ.Infra.Repositories.Empresa;
 using MercadoTesteAZ.Infra.Repositories.Pagamentos;
 using MercadoTesteAZ.Infra.Repositories.Pedidos;
 using MercadoTesteAZ.Infra.Repositories.Produtos;
-using MercadoTesteAZ.Infra.Repositories.Usuarios;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MercadoTesteAZ.Infra.Repositories
@@ -19,7 +18,6 @@ namespace MercadoTesteAZ.Infra.Repositories
         private ICartaoDeCreditoRepository? _cartaoDeCreditoRepository;
         private IContaBancariaRepository? _contaBancariaRepository;
         private IPedidoRepository? _pedidoRepository;
-        private IUsuarioRepository? _usuarioRepository;
         private IDbContextTransaction? _transaction;
         public AppDbContext _context;
 
@@ -35,7 +33,6 @@ namespace MercadoTesteAZ.Infra.Repositories
         public ICartaoDeCreditoRepository CartaoDeCreditoRepository { get { return _cartaoDeCreditoRepository ??= new CartaoDeCreditoRepository(_context); } }
         public IContaBancariaRepository ContaBancariaRepository { get { return _contaBancariaRepository ??= new ContaBancariaRepository(_context); } }
         public IPedidoRepository PedidoRepository { get { return _pedidoRepository ??= new PedidoRepository(_context); } }
-        public IUsuarioRepository UsuarioRepository { get { return _usuarioRepository ??= new UsuarioRepository(_context); } }
 
         public async Task CommitAsync()
         {

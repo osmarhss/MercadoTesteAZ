@@ -1,6 +1,5 @@
 ﻿using MercadoTesteAZ.Domain.Entities.MeiosDePagamento;
 using MercadoTesteAZ.Presentation.ViewModels.ContasBancarias;
-using MercadoTesteAZ.Presentation.ViewModels.Usuarios;
 
 namespace MercadoTesteAZ.Presentation.ViewModels.Vendedores
 {
@@ -14,6 +13,5 @@ namespace MercadoTesteAZ.Presentation.ViewModels.Vendedores
         public int QtdVendida { get; set; }
         public double? NotaAvaliacao { get; set; }
         public IEnumerable<ContaBancariaViewModel>? ContaBancaria { get; set; }
-        public UsuarioViewModel? UsuarioViewModel { get; set; }
     }
 }

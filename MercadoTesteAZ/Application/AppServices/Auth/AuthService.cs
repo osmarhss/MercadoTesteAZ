@@ -1,5 +1,5 @@
 ﻿using MercadoTesteAZ.Application.DTOs;
-using MercadoTesteAZ.Domain.Entities;
+using MercadoTesteAZ.Domain.Entities.Usuários;
 using MercadoTesteAZ.Domain.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;

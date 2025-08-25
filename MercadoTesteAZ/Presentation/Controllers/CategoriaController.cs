@@ -4,11 +4,13 @@ using MercadoTesteAZ.Application.AppServices.Categorias;
 using MercadoTesteAZ.Application.DTOs;
 using MercadoTesteAZ.Domain.Entities.Categorias;
 using MercadoTesteAZ.Presentation.ViewModels.Categorias;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MercadoTesteAZ.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "AdminOnly")]
     public class CategoriaController : Controller
     {
         private readonly ICategoriaAppService<CategoriaAdminViewModel, CategoriaDraft, Categoria> _categoriaAppServ;

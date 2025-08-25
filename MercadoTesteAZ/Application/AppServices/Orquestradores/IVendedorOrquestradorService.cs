@@ -5,6 +5,6 @@ namespace MercadoTesteAZ.Application.AppServices.Aggregations
 {
     public interface IVendedorOrquestradorService
     {
-        public Task<string> AdicionarComUsuarioAsync(VendedorViewModel vm);
+        //public Task<string> AdicionarComUsuarioAsync(VendedorViewModel vm);
     }
 }
